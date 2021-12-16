@@ -2,7 +2,7 @@ import _ from 'lodash';
 import React, { Component } from 'react';
 import BookForm from './BookForm';
 import { View, Text, Button, Modal, ActionSheetIOS } from 'react-native';
-import { updateBook, editBook, deleteBook } from '../actions/BookActions';
+import { updateBook, editBook, deleteBook, loadBook } from '../actions/BookActions';
 import { Spinner } from '../common/Spinner';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
@@ -17,28 +17,14 @@ class EditBook extends Component {
         deleted: false
       };
 
-    componentWillMount() {
+    componentDidMount() {
         _.each(this.props.book, (value, prop) => {
-            this.props.editBook({ prop, value });
+            this.props.loadBook({ prop, value });
         });
     }
 
     onSavePress() {
-        //this.props.editBook({title: this.props.title, body: this.props.body, id: this.props.id})
-        
-        const { currentUser } = auth();
-        const lastEdit = new Date().toLocaleString();
-    
-        database().ref(`users/${currentUser.uid}/book/${this.props.id}`)
-        .set({
-            title: this.props.title,
-            body: this.props.body,
-            lastEdit : lastEdit,
-            id: this.props.id
-        }).then(() => {
-            Actions.Books();
-        });
-        
+        this.props.editBook({title: this.props.title, body: this.props.body, id: this.props.id})
     };
 
     onDeletePress() {
@@ -93,4 +79,4 @@ const mapStateToProps = (state) => {
     return { title: state.title, body: state.body, loading: state.loading, id: state.id };
 };
 
-export default connect(mapStateToProps, { updateBook, editBook, deleteBook })(EditBook);
+export default connect(mapStateToProps, { updateBook, editBook, deleteBook, loadBook })(EditBook);

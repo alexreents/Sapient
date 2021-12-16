@@ -7,7 +7,7 @@ export default BookReducer = (state = INITIAL_STATE, action) => {
         case 'book_fetch_success':
             return { books: action.payload, loading: false };
         case 'book_update':
-            return { ...state, [action.payload.prop]: action.payload.value };
+            return({ ...state, [action.payload.prop]: action.payload.value });
         case 'book_edit':
             return { ...state, [action.payload.prop]: action.payload.value };
         case 'book_create':

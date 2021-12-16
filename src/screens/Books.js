@@ -6,26 +6,20 @@ import database from '@react-native-firebase/database'
 import { connect } from 'react-redux';
 import { fetchBooks } from '../actions/BookActions';
 import BookItem from './BookItem';
+import { Spinner } from '../common/Spinner';
+
 
 class Books extends Component {
   state = {email: '', password: ''}
 
-  componentWillMount() {
-    this.props.fetchBooks();
-  }
-
   componentDidMount() {
     const { currentUser } = auth();
     this.setState({ currentUser });
-  }
+    this.props.fetchBooks();
 
-  _renderRow(book) {
-    return <BookItem book={book}/>
   }
 
   _renderItem = ({item}) => {
-    //return <View><Text>{item.title}</Text></View>
-
     return <BookItem book={item}/>
   }
 
@@ -35,7 +29,6 @@ class Books extends Component {
     } 
 
     obj = this.props.dataSource.books;
-    //console.log(this.props);
     const result = [];
     try { 
       Object.keys(obj).forEach(function(key) {
@@ -108,7 +101,7 @@ const mapStateToProps = (state) => {
   // state is here correctly 
   return {
       booksAvailable: state !== {},
-      loading: false, //state.book.loading,
+      loading: state.loading, //state.book.loading,
       dataSource: state
   };
 };

@@ -30,10 +30,6 @@ class BookItem extends Component {
 };
 
 const mapStateToProps = (state, ownProps) => {
-    //console.log("_____STATE______");
-    //console.log(state);
-    //console.log("_____OWNPROPS______");
-    //console.log(ownProps.book.id);
    const pressed = false; //state.selectedBook.id === ownProps.book.id;
  
    return { pressed };

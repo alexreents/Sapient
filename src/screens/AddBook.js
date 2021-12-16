@@ -31,7 +31,7 @@ const mapStateToProps = state => {
     return {
         title: state.title,
         body: state.body,
-        loading: false
+        loading: state.loading
     };
 };
 

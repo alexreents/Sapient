@@ -15,14 +15,12 @@ export const fetchBooks = () => {
 };
 
 export const createBook = ({ title, body }) => {
-    // title and body are here correctly
-
     const { currentUser } = auth();
     const lastEdit = new Date().toLocaleString();
 
 
     return (dispatch) => {
-        dispatch({ type: 'save_book' });
+        dispatch({ type: 'book_create' });
 
         database().ref(`users/${currentUser.uid}/book`)
         .push({title, body, lastEdit})
@@ -46,30 +44,26 @@ export const selectBook = ({ id }) => {
     Actions.AddBook();
 };
 
-/*
+
 export const editBook = ({ title, body, id }) => {
-    console.log("HERE!");
     const { currentUser } = auth();
     const lastEdit = new Date().toLocaleString();
-
 
     return (dispatch) => {
         database().ref(`users/${currentUser.uid}/book/${id}`)
         .set({
-            title: {title},
-            body: {body},
+            title: title,
+            body: body,
             lastEdit : lastEdit,
-            id: {id}
+            id: id
         }).then(() => {
-            dispatch({ type: 'book_edit' });
             Actions.Books();
         });
     };
 };
-*/
 
 
-export const editBook = ({ prop, value }) => {
+export const loadBook = ({ prop, value }) => {
     return {
         type: 'book_edit',
         payload: { prop, value }

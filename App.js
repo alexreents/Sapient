@@ -5,9 +5,9 @@ import { createStore, applyMiddleware } from 'redux';
 import { StyleSheet, Platform, Image, Text, View } from 'react-native'
 import { createSwitchNavigator, createAppContainer } from 'react-navigation' 
 import ReduxThunk from 'redux-thunk';
-import bookReducer from './src/reducers/BookReducer';
+import BookReducer from './src/reducers/BookReducer';
 
-const store = createStore(bookReducer, {}, applyMiddleware(ReduxThunk));
+const store = createStore(BookReducer, {}, applyMiddleware(ReduxThunk));
 
 // import the different screens
 import Signup from './src/screens/Signup';
