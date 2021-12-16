@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { StyleSheet, Platform, Image, Text, View, Button } from 'react-native'
 import AddButton from '../components/AddButton';
 import auth from '@react-native-firebase/auth'
+import database from '@react-native-firebase/database'
 
 export default class Books extends Component {
   state = {email: '', password: ''}
@@ -14,13 +15,15 @@ export default class Books extends Component {
 
   render() {
     const { currentUser } = this.state
+
     return (
       <View style={styles.container}>
         <Text style={styles.explore} onPress={() => this.props.navigation.navigate('Discover')}>Discover</Text>
         <Text style={styles.text}>
           Welcome, {currentUser && currentUser.email}
+          
         </Text>
-        <AddButton/>
+        <AddButton onPress={() => this.props.navigation.navigate('AddBook')}/>
       </View>
     )
   }
