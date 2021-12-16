@@ -20,7 +20,7 @@ class AddBook extends Component {
     render() {
         return (
             <View>
-                <BookForm  {...this.props} />
+                <BookForm />
                 {this.renderButton()}
             </View>
         );

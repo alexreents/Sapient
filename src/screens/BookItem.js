@@ -7,14 +7,15 @@ import { selectBook } from '../actions/BookActions';
 class BookItem extends Component {
 
     
-    onBookPress() {
-        const { book } = this.props;
-        //Actions.noteEdit({ note: this.props.note });
+    onBookPress() {      
+        //const { book } = this.props.book;
+        Actions.EditBook({ book: this.props.book });
     }
 
      
     render() {  
         const { book, pressed } = this.props;
+        
         const { id, title, lastEdit } = this.props.book;
      
         return (
@@ -29,7 +30,11 @@ class BookItem extends Component {
 };
 
 const mapStateToProps = (state, ownProps) => {
-   const pressed = state.selectedBook.id === ownProps.book.id;
+    //console.log("_____STATE______");
+    //console.log(state);
+    //console.log("_____OWNPROPS______");
+    //console.log(ownProps.book.id);
+   const pressed = false; //state.selectedBook.id === ownProps.book.id;
  
    return { pressed };
 };

@@ -24,28 +24,27 @@ class Books extends Component {
   }
 
   _renderItem = ({item}) => {
-    return <View><Text>{item.title}</Text></View>
-  }
+    //return <View><Text>{item.title}</Text></View>
 
-  _myKeyExtractor = (item) => {
-    return item.id
+    return <BookItem book={item}/>
   }
 
   _renderBooks() {
     if (this.props.loading) {
         return <Spinner size="large"/>
     } 
-    console.log("_____DATA SOURCE______");
+
     obj = this.props.dataSource.books;
-
+    //console.log(this.props);
     const result = [];
-
-    Object.keys(obj).forEach(function(key) {
+    try { 
+      Object.keys(obj).forEach(function(key) {
         myBook = obj[key];
         result.push(myBook);
-    });
+      });
+    } catch {
 
-    console.log(result);
+    }
 
     if (this.props.booksAvailable)
         return (
@@ -55,7 +54,7 @@ class Books extends Component {
               <FlatList
                 data={result}
                 renderItem={this._renderItem}
-                keyExtractor={this._myKeyExtractor}
+                //keyExtractor={book => book.id}
               />
             </SafeAreaView>
             <Text>Below</Text>

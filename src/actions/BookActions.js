@@ -14,13 +14,6 @@ export const fetchBooks = () => {
     };
 };
 
-export const updateBook = ({ prop, value }) => {
-    return {
-        type: 'book_update',
-        payload: { prop, value }
-    };
-};
-
 export const createBook = ({ title, body }) => {
     // title and body are here correctly
 
@@ -46,9 +39,63 @@ export const createBook = ({ title, body }) => {
 
 export const selectBook = ({ id }) => {
     return {
-        type: 'select_note',
+        type: 'select_book',
         payload: id 
     };
 
     Actions.AddBook();
+};
+
+/*
+export const editBook = ({ title, body, id }) => {
+    console.log("HERE!");
+    const { currentUser } = auth();
+    const lastEdit = new Date().toLocaleString();
+
+
+    return (dispatch) => {
+        database().ref(`users/${currentUser.uid}/book/${id}`)
+        .set({
+            title: {title},
+            body: {body},
+            lastEdit : lastEdit,
+            id: {id}
+        }).then(() => {
+            dispatch({ type: 'book_edit' });
+            Actions.Books();
+        });
+    };
+};
+*/
+
+
+export const editBook = ({ prop, value }) => {
+    return {
+        type: 'book_edit',
+        payload: { prop, value }
+    };
+};
+
+
+export const updateBook = ({ prop, value }) => {
+    return {
+        type: 'book_update',
+        payload: { prop, value }
+    };
+};
+
+
+
+export const deleteBook = ({ id }) => {
+    const { currentUser } = auth();
+
+    return (dispatch) => {
+        dispatch({ type: 'delete_book' });
+
+        database().ref(`/users/${currentUser.uid}/book/${id}`).remove()
+        .then(() => {
+            dispatch({ type: 'delete_book_success' });
+            Actions.Books();
+        })
+    }
 };
