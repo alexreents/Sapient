@@ -2,10 +2,10 @@ const INITIAL_STATE = { books: {} , id: null, title: ' ', body: ' ', loading: fa
 
 export default BookReducer = (state = INITIAL_STATE, action) => {
     switch(action.type) {
-        case 'book_notes':
+        case 'fetch_books':
             return { ...state, loading: true };
         case 'book_fetch_success':
-            return { notes: action.payload, loading: false };
+            return { books: action.payload, loading: false };
         case 'book_update':
             return { ...state, [action.payload.prop]: action.payload.value };
         case 'book_edit':

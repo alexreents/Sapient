@@ -1,17 +1,78 @@
 import React, { Component } from 'react'
-import { StyleSheet, Platform, Image, Text, View, Button } from 'react-native'
+import { StyleSheet, Platform, Image, Text, View, Button, FlatList, ScrollView, List, SafeAreaView } from 'react-native'
 import AddButton from '../components/AddButton';
 import auth from '@react-native-firebase/auth'
 import database from '@react-native-firebase/database'
+import { connect } from 'react-redux';
+import { fetchBooks } from '../actions/BookActions';
+import BookItem from './BookItem';
 
-export default class Books extends Component {
+class Books extends Component {
   state = {email: '', password: ''}
-  componentDidMount() {
-    const { currentUser } = auth()
-    this.setState({ currentUser })
+
+  componentWillMount() {
+    this.props.fetchBooks();
   }
 
-  state = { currentUser: null }
+  componentDidMount() {
+    const { currentUser } = auth();
+    this.setState({ currentUser });
+  }
+
+  _renderRow(book) {
+    return <BookItem book={book}/>
+  }
+
+  _renderItem = ({item}) => {
+    return <View><Text>{item.title}</Text></View>
+  }
+
+  _myKeyExtractor = (item) => {
+    return item.id
+  }
+
+  _renderBooks() {
+    if (this.props.loading) {
+        return <Spinner size="large"/>
+    } 
+    console.log("_____DATA SOURCE______");
+    obj = this.props.dataSource.books;
+
+    const result = [];
+
+    Object.keys(obj).forEach(function(key) {
+        myBook = obj[key];
+        result.push(myBook);
+    });
+
+    console.log(result);
+
+    if (this.props.booksAvailable)
+        return (
+          <View>
+            <Text>Above</Text>
+            <SafeAreaView style={styles.content}>
+              <FlatList
+                data={result}
+                renderItem={this._renderItem}
+                keyExtractor={this._myKeyExtractor}
+              />
+            </SafeAreaView>
+            <Text>Below</Text>
+          </View>
+        )
+        return (
+            <Text>Start by adding notes!</Text>
+        )
+  };
+
+  /*renderRow={this._renderRow}
+            <FlatList
+              data={this.props.dataSource.books}
+              renderItem={({item: { title }) => <Text>{title}</Text>}
+              keyExtractor={({id}) => id.toString()}
+            />
+            */
 
   render() {
     const { currentUser } = this.state
@@ -23,11 +84,37 @@ export default class Books extends Component {
           Welcome, {currentUser && currentUser.email}
           
         </Text>
+        <View>
+          {this._renderBooks()}
+        </View>
         <AddButton onPress={() => this.props.navigation.navigate('AddBook')}/>
       </View>
     )
   }
 }
+
+/*
+const dataSource = new FlatList.DataSource({
+  rowHasChanged: (r1, r2) => r1 !== r2,
+});
+
+const dataSource = (listData, renderItem) => {
+  return {
+    <FlatList data={rowHasChanged: (r1, r2) => r1 !== r2} />
+  }
+}
+*/
+
+const mapStateToProps = (state) => {
+  // state is here correctly 
+  return {
+      booksAvailable: state !== {},
+      loading: false, //state.book.loading,
+      dataSource: state
+  };
+};
+
+export default connect(mapStateToProps, { fetchBooks })(Books);
 
 const styles = StyleSheet.create({
   container: {

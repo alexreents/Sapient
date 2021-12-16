@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { Actions } from 'react-native-router-flux'
 import { StyleSheet, Text, TextInput, View, Button } from 'react-native'
 import auth from '@react-native-firebase/auth';
 
@@ -8,7 +9,7 @@ export default class Login extends Component {
     const { email, password, errorMessage } = this.state
     auth()
         .signInWithEmailAndPassword(email, password)
-        .then(() => this.props.navigation.navigate('Books'))
+        .then(() => Actions.Books())
         .catch(error => this.setState({ errorMessage: error.message }))
   }
   render() {

@@ -25,9 +25,7 @@ class BookForm extends Component {
 };
 
 const mapStateToProps = (state) => {
-    const { title } = state.title;
-    const { body } = state.body;
-    return { title, body };
+    return {title: state.title, body: state.body};
 };
 
 export default connect(mapStateToProps, { updateBook })(BookForm);
