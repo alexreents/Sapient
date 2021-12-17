@@ -1,18 +1,16 @@
 import React, { Component } from 'react';
-import { View,Button, Text, TouchableHighlight } from 'react-native';
+import { View,Button, Text, TouchableHighlight, StyleSheet, Dimensions } from 'react-native';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
 import { selectBook } from '../actions/BookActions';
+import { grey100 } from 'react-native-paper/lib/typescript/styles/colors';
 
 class BookItem extends Component {
 
-    
     onBookPress() {      
-        //const { book } = this.props.book;
         Actions.EditBook({ book: this.props.book });
     }
 
-     
     render() {  
         const { book, pressed } = this.props;
         
@@ -20,9 +18,8 @@ class BookItem extends Component {
      
         return (
                 <TouchableHighlight onPress={this.onBookPress.bind(this)} >     
-                    <View>
-                        <Text style={{ fontSize: 22}}>{title}</Text>
-                        <Text style={{ fontSize: 12}}>Edited on: {lastEdit}</Text>
+                    <View sytle={styles.container}>
+                        <Text style={styles.text}>{title}</Text>
                     </View>
                 </TouchableHighlight>
         )
@@ -37,3 +34,20 @@ const mapStateToProps = (state, ownProps) => {
 
 export default connect(mapStateToProps, { selectBook })(BookItem);
 
+const windowWidth = Dimensions.get('window').width;
+const windowHeight = Dimensions.get('window').height;
+
+const styles = StyleSheet.create({
+    container: {
+      alignSelf: 'center',
+      alignItems: 'center',
+    }, 
+    text: {
+        justifyContent: 'space-around',
+        alignContent: 'center',
+        backgroundColor: 'grey',
+        margin: 10,
+        width: 0.4*windowWidth,
+        height: windowHeight/5,
+    }
+  })

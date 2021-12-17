@@ -32,10 +32,10 @@ class App extends Component{
 
 const Routes = () => (
   <Router>
-     <Scene key = "root">
+     <Scene key = "root" headerShown={false}>
         <Scene key = "Loading" component = {Loading} title = "Loading" initial = {true} />
         <Scene key = "Books" component = {Books} title = "Books" />
-        <Scene key = "AddBook" component = {AddBook} title = "AddBook" />
+        <Scene key = "AddBook" component = {AddBook} title = "AddBook"/>
         <Scene key = "BookItem" component = {BookItem} title = "BookItem" />
         <Scene key = "EditBook" component = {EditBook} title = "EditBook" />
         <Scene key = "Discover" component = {Discover} title = "Discover" />
@@ -45,6 +45,8 @@ const Routes = () => (
      </Scene>
   </Router>
 )
+
+export default App;
 
 /*
 const myStack = createSwitchNavigator({
@@ -64,4 +66,3 @@ const myStack = createSwitchNavigator({
 const AppContainer = createAppContainer(myStack)
 */
 
-export default App;

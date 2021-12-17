@@ -29,6 +29,7 @@ class Books extends Component {
     } 
 
     obj = this.props.dataSource.books;
+
     const result = [];
     try { 
       Object.keys(obj).forEach(function(key) {
@@ -39,18 +40,18 @@ class Books extends Component {
 
     }
 
+    const numColumns = 2;
+
     if (this.props.booksAvailable)
         return (
           <View>
-            <Text>Above</Text>
             <SafeAreaView style={styles.content}>
-              <FlatList
+              <FlatList 
                 data={result}
                 renderItem={this._renderItem}
-                //keyExtractor={book => book.id}
+                numColumns={2}
               />
             </SafeAreaView>
-            <Text>Below</Text>
           </View>
         )
         return (
@@ -58,13 +59,6 @@ class Books extends Component {
         )
   };
 
-  /*renderRow={this._renderRow}
-            <FlatList
-              data={this.props.dataSource.books}
-              renderItem={({item: { title }) => <Text>{title}</Text>}
-              keyExtractor={({id}) => id.toString()}
-            />
-            */
 
   render() {
     const { currentUser } = this.state
@@ -84,18 +78,6 @@ class Books extends Component {
     )
   }
 }
-
-/*
-const dataSource = new FlatList.DataSource({
-  rowHasChanged: (r1, r2) => r1 !== r2,
-});
-
-const dataSource = (listData, renderItem) => {
-  return {
-    <FlatList data={rowHasChanged: (r1, r2) => r1 !== r2} />
-  }
-}
-*/
 
 const mapStateToProps = (state) => {
   // state is here correctly 
@@ -123,6 +105,10 @@ const styles = StyleSheet.create({
     marginTop: 50,
     marginRight: 20,
     fontWeight: '700'
+  }, 
+  content: {
+    marginTop: 10,
+    alignItems: 'center'
   }
 })
 
