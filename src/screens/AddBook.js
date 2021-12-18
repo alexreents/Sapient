@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, Text, Button } from 'react-native';
+import { StyleSheet, View, Text, Button, Dimensions } from 'react-native';
 import { connect } from 'react-redux';
 import { createBook, updateBook } from '../actions/BookActions';
 import { Spinner } from '../common/Spinner';
@@ -10,7 +10,7 @@ class AddBook extends Component {
         if (this.props.loading) {
             return <Spinner />
         }
-        return <Button title="Save" onPress={this.onButtonPress.bind(this)}>Save</Button>
+        return <Text style={styles.saveButton} onPress={this.onButtonPress.bind(this)}>{'<  '} Save</Text>
     };
 
     onButtonPress() { 
@@ -19,9 +19,9 @@ class AddBook extends Component {
 
     render() {
         return (
-            <View>
-                <BookForm />
+            <View style={styles.formContainer}>
                 {this.renderButton()}
+                <BookForm styles={styles.form}/>
             </View>
         );
     };
@@ -37,11 +37,22 @@ const mapStateToProps = state => {
 
 export default connect(mapStateToProps, { createBook, updateBook }) (AddBook);
 
+
+const windowWidth = Dimensions.get('window').width;
+const windowHeight = Dimensions.get('window').height;
+
+
 const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      backgroundColor: 'white',
-      justifyContent: 'center',
-      alignSelf: 'center'
-    }
+    formContainer: {
+        flex: 1,
+        backgroundColor: 'grey'
+    },
+    saveButton: {
+        alignSelf: 'flex-start',
+        paddingTop: 50,
+        paddingLeft: 20,
+        fontWeight: '700',
+        color: 'black',
+        fontSize: 16
+    } 
   })

@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 import { fetchBooks } from '../actions/BookActions';
 import BookItem from './BookItem';
 import { Spinner } from '../common/Spinner';
+import { Actions } from 'react-native-router-flux';
 
 
 class Books extends Component {
@@ -73,11 +74,14 @@ class Books extends Component {
         <View>
           {this._renderBooks()}
         </View>
-        <AddButton onPress={() => this.props.navigation.navigate('AddBook')}/>
+        <AddButton onPress={() => Actions.AddBook()}/>
       </View>
     )
   }
 }
+
+//<AddButton onPress={() => this.props.navigation.navigate('AddBook')}/>
+
 
 const mapStateToProps = (state) => {
   // state is here correctly 
