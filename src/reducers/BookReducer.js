@@ -1,4 +1,4 @@
-const INITIAL_STATE = { books: {} , id: null, title: ' ', body: ' ', loading: false, error: ''};
+const INITIAL_STATE = { books: {} , id: null, title: ' ', body: ' ', author: null, image: '', loading: false, error: ''};
 
 export default BookReducer = (state = INITIAL_STATE, action) => {
     switch(action.type) {

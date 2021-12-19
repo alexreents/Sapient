@@ -24,7 +24,7 @@ class EditBook extends Component {
     }
 
     onSavePress() {
-        this.props.editBook({title: this.props.title, body: this.props.body, id: this.props.id})
+        this.props.editBook({title: this.props.title, author: this.props.author, body: this.props.body, image: this.props.image, id: this.props.id})
     };
 
     onDeletePress() {

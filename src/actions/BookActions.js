@@ -14,7 +14,7 @@ export const fetchBooks = () => {
     };
 };
 
-export const createBook = ({ title, body }) => {
+export const createBook = ({ title, body, author, image }) => {
     const { currentUser } = auth();
     const lastEdit = new Date().toLocaleString();
 
@@ -23,7 +23,7 @@ export const createBook = ({ title, body }) => {
         dispatch({ type: 'book_create' });
 
         database().ref(`users/${currentUser.uid}/book`)
-        .push({title, body, lastEdit})
+        .push({title, body, author, image, lastEdit})
         .then((res) => {
             const id = res.key;
             database().ref(`users/${currentUser.uid}/book/${res.key}/id`).set(id)
@@ -45,7 +45,7 @@ export const selectBook = ({ id }) => {
 };
 
 
-export const editBook = ({ title, body, id }) => {
+export const editBook = ({ title, body, author, id }) => {
     const { currentUser } = auth();
     const lastEdit = new Date().toLocaleString();
 
@@ -55,6 +55,8 @@ export const editBook = ({ title, body, id }) => {
             title: title,
             body: body,
             lastEdit : lastEdit,
+            author: author,
+            image: image,
             id: id
         }).then(() => {
             Actions.Books();

@@ -41,8 +41,6 @@ class Books extends Component {
 
     }
 
-    const numColumns = 2;
-
     if (this.props.booksAvailable)
         return (
           <View>
@@ -50,7 +48,8 @@ class Books extends Component {
               <FlatList 
                 data={result}
                 renderItem={this._renderItem}
-                numColumns={2}
+                numColumns={3}
+                showsVerticalScrollIndicator={false}
               />
             </SafeAreaView>
           </View>
@@ -64,12 +63,13 @@ class Books extends Component {
   render() {
     const { currentUser } = this.state
 
+    // Welcome, {currentUser && currentUser.email}
+
     return (
       <View style={styles.container}>
         <Text style={styles.explore} onPress={() => this.props.navigation.navigate('Discover')}>Discover</Text>
         <Text style={styles.text}>
-          Welcome, {currentUser && currentUser.email}
-          
+          My Collection
         </Text>
         <View>
           {this._renderBooks()}
@@ -84,10 +84,9 @@ class Books extends Component {
 
 
 const mapStateToProps = (state) => {
-  // state is here correctly 
   return {
       booksAvailable: state !== {},
-      loading: state.loading, //state.book.loading,
+      loading: state.loading,
       dataSource: state
   };
 };
@@ -112,7 +111,9 @@ const styles = StyleSheet.create({
   }, 
   content: {
     marginTop: 10,
-    alignItems: 'center'
+    alignItems: 'center',
+    overflow: 'visible',
+    marginBottom: 100
   }
 })
 

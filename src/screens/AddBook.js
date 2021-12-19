@@ -4,24 +4,34 @@ import { connect } from 'react-redux';
 import { createBook, updateBook } from '../actions/BookActions';
 import { Spinner } from '../common/Spinner';
 import BookForm from './BookForm';
+import { Actions } from 'react-native-router-flux'
 
 class AddBook extends Component {
-    renderButton() {
-        if (this.props.loading) {
-            return <Spinner />
-        }
-        return <Text style={styles.saveButton} onPress={this.onButtonPress.bind(this)}>{'<  '} Save</Text>
+    renderHeader() {
+        //if (this.props.loading) {
+        //    return <Spinner />
+        //}
+        return (
+            <View style={styles.header}>
+                <Text style={styles.backButton} onPress={() => {
+                    Actions.Books({});
+                }}>{'< '} Cancel
+                </Text>
+                <Text style={styles.saveButton} onPress={this.onButtonPress.bind(this)}>Save</Text>
+            </View>
+        )
     };
 
     onButtonPress() { 
-        this.props.createBook({title: this.props.title, body: this.props.body});
+        this.props.createBook({title: this.props.title, body: this.props.body, author: this.props.author, image: this.props.image });
     };
 
     render() {
+        // IMPORTANT WHY IS THIS PAGE BEING RENDERED SO MUCH ??! test: console.log(this.props)
         return (
             <View style={styles.formContainer}>
-                {this.renderButton()}
-                <BookForm styles={styles.form}/>
+                {this.renderHeader()}
+                <BookForm/>
             </View>
         );
     };
@@ -31,6 +41,8 @@ const mapStateToProps = state => {
     return {
         title: state.title,
         body: state.body,
+        author: state.author,
+        image: state.image,
         loading: state.loading
     };
 };
@@ -44,15 +56,23 @@ const windowHeight = Dimensions.get('window').height;
 
 const styles = StyleSheet.create({
     formContainer: {
-        flex: 1,
-        backgroundColor: 'grey'
+        backgroundColor: '#c9c9c9',
+        flex: 1
     },
-    saveButton: {
-        alignSelf: 'flex-start',
+    header: {
+        flexDirection:'row',
+        justifyContent: 'space-between'
+    },
+    backButton: {
         paddingTop: 50,
         paddingLeft: 20,
         fontWeight: '700',
         color: 'black',
-        fontSize: 16
+    }, 
+    saveButton: {
+        paddingTop: 50,
+        paddingRight: 20,
+        fontWeight: '700',
+        color: 'black',
     } 
   })

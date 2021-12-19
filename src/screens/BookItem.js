@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
-import { View,Button, Text, TouchableHighlight, StyleSheet, Dimensions } from 'react-native';
+import { View,Button, Text, TouchableHighlight, StyleSheet, Dimensions, Image } from 'react-native';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
 import { selectBook } from '../actions/BookActions';
-import { grey100 } from 'react-native-paper/lib/typescript/styles/colors';
 
 class BookItem extends Component {
 
@@ -14,12 +13,15 @@ class BookItem extends Component {
     render() {  
         const { book, pressed } = this.props;
         
-        const { id, title, lastEdit } = this.props.book;
-     
+        const { id, title, lastEdit, image } = this.props.book;
+        imgLink = `${image}`;
+        httpsLink = imgLink.slice(0, 4) + "s" + imgLink.slice(4);
+
         return (
-                <TouchableHighlight onPress={this.onBookPress.bind(this)} >     
-                    <View sytle={styles.container}>
-                        <Text style={styles.text}>{title}</Text>
+                <TouchableHighlight onPress={this.onBookPress.bind(this)} > 
+                 
+                    <View style={styles.container}>
+                        <Image style={styles.text} source={{uri: httpsLink}}/>
                     </View>
                 </TouchableHighlight>
         )
@@ -41,13 +43,17 @@ const styles = StyleSheet.create({
     container: {
       alignSelf: 'center',
       alignItems: 'center',
+      shadowColor: '#000',
+      shadowOffset: { width: 1, height: 4 },
+      shadowOpacity:  0.4,
+      shadowRadius: 3,
     }, 
     text: {
         justifyContent: 'space-around',
         alignContent: 'center',
-        backgroundColor: 'grey',
         margin: 10,
-        width: 0.4*windowWidth,
-        height: windowHeight/5,
+        width: 0.25*windowWidth,
+        height: 0.375*windowWidth,
+
     }
   })

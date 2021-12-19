@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, TextInput, FlatList, TouchableOpacity, Button, TouchableHighlight, StyleSheet, Dimensions, KeyboardAvoidingView, ScrollView} from 'react-native';
+import { View, Text, TextInput, FlatList, TouchableOpacity, Button, TouchableHighlight, TouchableWithoutFeedback, StyleSheet, Dimensions, Keyboard, KeyboardAvoidingView, ScrollView} from 'react-native';
 import { connect } from 'react-redux';
 import { updateBook } from '../actions/BookActions';
 import filter from 'lodash.filter'
@@ -7,10 +7,11 @@ import filter from 'lodash.filter'
  
 class BookForm extends Component {
     state = {
-        data: [],
+        titles: [],
         error: null,
         showList: true,
-        inputText: ''
+        inputText: '',
+        resultData: null
     }
 
     componentDidMount() {
@@ -23,19 +24,17 @@ class BookForm extends Component {
         fetch(url)
           .then(res => res.json())
           .then(res => {
-            if((this.state.data[0] !== undefined) && (this.state.data[0] === this.state.data[1])) {
-                this.setState({
-                    data: [this.state.data[0]]
-                })
-            } else if(this.state.data.length < 5) {
-                this.setState({
-                    data: [res["items"][0]["volumeInfo"]["title"], ...this.state.data]
-                })
+            this.setState({resultData:res["items"]});
+            if(res["items"][0]["volumeInfo"]["title"] === res["items"][1]["volumeInfo"]["title"]) {
+              this.setState({
+                titles: [res["items"][0]["volumeInfo"]["title"]]
+              })
             } else {
-                this.state.data.pop();
-                this.setState({
-                    data: [res["items"][0]["volumeInfo"]["title"], ...this.state.data]
-                })
+              resultArray = [];
+              for(i=0; i<4; i++) {resultArray.push(res["items"][i]["volumeInfo"]["title"])}
+              this.setState({
+                titles: [...new Set([resultArray])][0]
+              })
             }
           })
           .catch(error => {
@@ -52,50 +51,51 @@ class BookForm extends Component {
 
         formattedQuery = this.state.inputText.toLowerCase().replace(/ /g,"+");
         this.makeRemoteRequest(formattedQuery);
-        this.setState({ data: []});
+        this.setState({ titles: []});
+        this.textInput.clear();
       }
     
       renderFooter = () => (
+        
         <View behavior={Platform.select({android: 'padding', ios: 'padding'})} behavior={Platform.select({android: 'padding', ios: 'padding'})}
           style={styles.searchBar}>
           <TextInput
             onChangeText={this.updateSearch}
-            placeholder={this.props.title ? (this.props.title) : ("Explore books")}
+            placeholder="Search books"
             style={styles.searchBarInput}
             ref={input => { this.textInput = input }}
+            onSubmitEditing={ this.handleSearch }
           />
-          <TouchableHighlight style={styles.seachGoButton} onPress={this.handleSearch}>
-            <Text>Select</Text>
-          </TouchableHighlight>
         </View>
       )
     
-    // <ScrollView keyboardDismissMode='on-drag' keyboardShouldPersistTaps='always'>
-
     render() {
         return (
             <KeyboardAvoidingView behavior={Platform.select({android: 'padding', ios: 'padding'})} style={styles.container}>
               <KeyboardAvoidingView behavior={Platform.select({android: 'padding', ios: 'padding'})} style={styles.bookDescription}>
-                <Text style={styles.titleText}>{this.props.title}</Text>
+                <Text style={styles.titleText}>{this.props.title===undefined ? ('Add new book') : (this.props.title)}</Text>
+                <Text style={styles.authorText}>{this.props.author===undefined ? ('') : (this.props.author)}</Text>
                 <TextInput 
-                  autoCorrect={false}
+                  autoCorrect={true}
                   style={styles.bodyText}
-                  placeholder="body"
+                  placeholder="Add notes here"
                   value={this.props.body}
                   onChangeText={value => this.props.updateBook({prop: 'body', value})}
+                  multiline={true}
                 />
               </KeyboardAvoidingView>
+              
               <View behavior={Platform.select({android: 'padding', ios: 'padding'})} style={styles.searchBarContainer}>
                 <FlatList 
                     style={styles.searchResultContainer}
                     ListFooterComponent={this.renderFooter}
-                    data={this.state.data}
+                    data={this.state.titles}
                     renderItem={({ item }) => (
-                      
                         <TouchableOpacity onPress={() => {
+                            author = this.state.resultData[0]["volumeInfo"]["authors"][0];
                             this.props.updateBook({prop: 'title', value: item});
-                            this.textInput.clear()
-                            this.props.title = item;
+                            this.props.updateBook({prop: 'author', value: author ? author : ''});
+                            this.props.updateBook({prop: 'image', value: this.state.resultData[0]["volumeInfo"]["imageLinks"]["smallThumbnail"]});
                             this.state.showList = false;
                           }
                         }>
@@ -110,13 +110,14 @@ class BookForm extends Component {
                     )}
                 />
               </View>  
+              
             </KeyboardAvoidingView>
         )
     }
 };
 
 const mapStateToProps = (state) => {
-    return {title: state.title, body: state.body};
+    return {title: state.title, body: state.body, author: state.author, image: state.image};
 };
 
 export default connect(mapStateToProps, { updateBook })(BookForm);
@@ -130,6 +131,7 @@ const styles = StyleSheet.create({
   },
   bookDescription: {
     flex: 1,
+    margin: 15
   },
   searchBarContainer: {
     alignSelf: 'center',
@@ -137,19 +139,16 @@ const styles = StyleSheet.create({
     bottom: 30,
     backgroundColor: 'white',
     borderRadius: 15,
-    borderWidth: 0
+    borderWidth: 1,
+    borderColor: 'gray'
   },
   searchBar: {
     flexDirection:'row',
     paddingVertical: 15,
     backgroundColor: 'white',
     paddingHorizontal: 20,
-
   },
   searchBarInput: {
-    flex: 1
-  },
-  searchGoButton: {
     flex: 1
   },
   searchResultContainer: {
@@ -157,10 +156,10 @@ const styles = StyleSheet.create({
   },
   searchResultItems: {
     paddingVertical: 15,
-    backgroundColor: 'lightgray',
+    backgroundColor: '#d9dcff',
     paddingHorizontal: 20,
     flexDirection:'row',
-    borderColor: 'grey',
+    borderColor: 'gray',
     borderBottomWidth: 1
   },
   searchResultText: {
@@ -174,8 +173,18 @@ const styles = StyleSheet.create({
     textAlign: 'right'
   },
   titleText: {
-    
+    textAlign: 'center',
+    fontSize: 18,
+    fontWeight: '500'
+  },
+  authorText: {
+    textAlign: 'center',
+    fontSize: 14,
+    fontWeight: '400',
+    color: 'gray'
   },
   bodyText: {
+    padding: 10,
+    marginTop: 15
   }
 })
