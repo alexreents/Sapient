@@ -93,12 +93,14 @@ class BookForm extends Component {
                     renderItem={({ item }) => (
                         <TouchableOpacity onPress={() => {
                             author = '';
+                            imgURL = ''
                             try {
                               author = this.state.resultData[0]["volumeInfo"]["authors"][0];
+                              imgURL = this.state.resultData[0]["volumeInfo"]["imageLinks"]["smallThumbnail"];
                             } catch {}
                             this.props.updateBook({prop: 'title', value: item});
                             this.props.updateBook({prop: 'author', value: author});
-                            this.props.updateBook({prop: 'image', value: this.state.resultData[0]["volumeInfo"]["imageLinks"]["smallThumbnail"]});
+                            this.props.updateBook({prop: 'image', value: imgURL});
                             this.state.showList = false;
                           }
                         }>

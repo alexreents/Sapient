@@ -38,7 +38,7 @@ export const selectBook = ({ id }) => {
         payload: id 
     };
 
-    Actions.AddBook();
+    //Actions.AddBook();
 };
 
 

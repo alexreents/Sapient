@@ -12,19 +12,31 @@ class BookItem extends Component {
 
     render() {  
         const { book, pressed } = this.props;
-        
         const { id, title, lastEdit, image } = this.props.book;
+        
         imgLink = `${image}`;
         httpsLink = imgLink.slice(0, 4) + "s" + imgLink.slice(4);
-
-        return (
+        if(imgLink !== '') {
+            return (
+                    <TouchableHighlight onPress={this.onBookPress.bind(this)} > 
+                    
+                        <View style={styles.container}>
+                            <Image style={styles.text} source={{uri: httpsLink}}/>
+                        </View>
+                    </TouchableHighlight>
+            )
+        } else {
+            return (
                 <TouchableHighlight onPress={this.onBookPress.bind(this)} > 
-                 
+                
                     <View style={styles.container}>
-                        <Image style={styles.text} source={{uri: httpsLink}}/>
+                        <View style={styles.text}>
+                            <Text style={styles.titleOnly}>{title}</Text>
+                        </View>
                     </View>
                 </TouchableHighlight>
-        )
+            )
+        }
     };
 };
 
@@ -54,6 +66,11 @@ const styles = StyleSheet.create({
         margin: 10,
         width: 0.25*windowWidth,
         height: 0.375*windowWidth,
-
+        backgroundColor: 'white'
+    }, 
+    titleOnly: {
+        textAlign: 'center',
+        padding: 3,
+        fontSize: 12
     }
   })

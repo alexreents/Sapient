@@ -15,7 +15,7 @@ class AddBook extends Component {
             <View style={styles.header}>
                 <Text style={styles.backButton} onPress={() => {
                     this.props.navigation.navigate('Books');
-                }}>{'< '} Cancel
+                }}>Cancel
                 </Text>
                 <Text style={styles.saveButton} onPress={this.onButtonPress.bind(this)}>Save</Text>
             </View>

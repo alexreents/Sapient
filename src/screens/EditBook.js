@@ -53,7 +53,7 @@ class EditBook extends Component {
         return (
             <View style={styles.header}>
                 <Text style={styles.backButton} onPress={this.onSavePress.bind(this)}>
-                    {'< '} Save
+                    Save
                 </Text>
                 <Text style={styles.deleteButton} onPress={this.onDeletePress.bind(this)}>Delete</Text>
             </View>
