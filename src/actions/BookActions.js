@@ -19,17 +19,14 @@ export const createBook = ({ title, body, author, image }) => {
     const lastEdit = new Date().toLocaleString();
 
 
-    return (dispatch) => {
-        dispatch({ type: 'book_create' });
-
+    return () => {
         database().ref(`users/${currentUser.uid}/book`)
         .push({title, body, author, image, lastEdit})
         .then((res) => {
             const id = res.key;
             database().ref(`users/${currentUser.uid}/book/${res.key}/id`).set(id)
             .then(() => {
-                dispatch({ type: 'book_create' });
-                Actions.Books();
+                
             });
         });
     };
@@ -45,11 +42,11 @@ export const selectBook = ({ id }) => {
 };
 
 
-export const editBook = ({ title, body, author, id }) => {
+export const editBook = ({ title, body, author, image, id }) => {
     const { currentUser } = auth();
     const lastEdit = new Date().toLocaleString();
 
-    return (dispatch) => {
+    return () => {
         database().ref(`users/${currentUser.uid}/book/${id}`)
         .set({
             title: title,
@@ -59,7 +56,6 @@ export const editBook = ({ title, body, author, id }) => {
             image: image,
             id: id
         }).then(() => {
-            Actions.Books();
         });
     };
 };
@@ -91,7 +87,7 @@ export const deleteBook = ({ id }) => {
         database().ref(`/users/${currentUser.uid}/book/${id}`).remove()
         .then(() => {
             dispatch({ type: 'delete_book_success' });
-            Actions.Books();
+            //Actions.Books();
         })
     }
 };

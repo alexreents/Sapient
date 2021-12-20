@@ -14,7 +14,7 @@ class AddBook extends Component {
         return (
             <View style={styles.header}>
                 <Text style={styles.backButton} onPress={() => {
-                    Actions.Books({});
+                    this.props.navigation.navigate('Books');
                 }}>{'< '} Cancel
                 </Text>
                 <Text style={styles.saveButton} onPress={this.onButtonPress.bind(this)}>Save</Text>
@@ -24,10 +24,10 @@ class AddBook extends Component {
 
     onButtonPress() { 
         this.props.createBook({title: this.props.title, body: this.props.body, author: this.props.author, image: this.props.image });
+        this.props.navigation.navigate('Books');
     };
 
     render() {
-        // IMPORTANT WHY IS THIS PAGE BEING RENDERED SO MUCH ??! test: console.log(this.props)
         return (
             <View style={styles.formContainer}>
                 {this.renderHeader()}

@@ -92,9 +92,12 @@ class BookForm extends Component {
                     data={this.state.titles}
                     renderItem={({ item }) => (
                         <TouchableOpacity onPress={() => {
-                            author = this.state.resultData[0]["volumeInfo"]["authors"][0];
+                            author = '';
+                            try {
+                              author = this.state.resultData[0]["volumeInfo"]["authors"][0];
+                            } catch {}
                             this.props.updateBook({prop: 'title', value: item});
-                            this.props.updateBook({prop: 'author', value: author ? author : ''});
+                            this.props.updateBook({prop: 'author', value: author});
                             this.props.updateBook({prop: 'image', value: this.state.resultData[0]["volumeInfo"]["imageLinks"]["smallThumbnail"]});
                             this.state.showList = false;
                           }
@@ -127,7 +130,7 @@ const windowHeight = Dimensions.get('window').height;
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flex: 1
   },
   bookDescription: {
     flex: 1,
