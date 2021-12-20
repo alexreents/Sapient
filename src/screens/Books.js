@@ -1,5 +1,6 @@
-import React, { Component } from 'react'
-import { StyleSheet, Platform, Image, Text, View, Button, FlatList, ScrollView, List, SafeAreaView } from 'react-native'
+import React, { Component, useState } from 'react'
+import { StyleSheet, Platform, Image, Text, TextInput, View, Button, FlatList, ScrollView, List, SafeAreaView } from 'react-native'
+import filter from 'lodash.filter'
 import AddButton from '../components/AddButton';
 import auth from '@react-native-firebase/auth'
 import database from '@react-native-firebase/database'
@@ -9,61 +10,82 @@ import BookItem from './BookItem';
 import { Spinner } from '../common/Spinner';
 import { Actions } from 'react-native-router-flux';
 
-
 class Books extends Component {
-  state = {email: '', password: ''}
+  state = {email: '', password: '', result: [], query: '', fullData: [], refresh: false}
 
   componentDidMount() {
     const { currentUser } = auth();
     this.setState({ currentUser });
     this.props.fetchBooks();
+  }
 
+  componentDidUpdate() {
+    const res = []
+    obj = this.props.dataSource.books;
+    try { 
+      Object.keys(obj).forEach(function(key) {
+        myBook = obj[key];
+        res.push(myBook);
+      });
+    } catch {
+
+    }
+
+    this.state.result = res;
+    this.state.fullData = res;
+  }
+
+  renderHeader = () => (
+    <View
+      style={{
+        backgroundColor: '#fff',
+        padding: 10,
+        alignItems: 'center',
+        justifyContent: 'center'
+      }}>
+      <TextInput
+        autoCapitalize='none'
+        autoCorrect={false}
+        onChangeText={this.handleSearch}
+        status='info'
+        placeholder='Search'
+        style={{
+          borderRadius: 25,
+          borderColor: '#333',
+          backgroundColor: '#fff'
+        }}
+        textStyle={{ color: '#000' }}
+      />
+    </View>
+  )
+
+  handleSearch = text => {
+    this.setState({ 
+      refresh: !this.state.refresh
+    })
+
+    const result = filter(this.state.fullData, user => {
+      return this.contains(user, text)
+    })
+    this.state.result = result;
+  }
+
+  contains = ({ title }, query) => {
+    formattedTitle = title.toLowerCase();
+    formattedQuery = query.toLowerCase();
+
+    if (formattedTitle.includes(formattedQuery)) {
+      return true
+    }
+    return false
   }
 
   _renderItem = ({item}) => {
     return <BookItem book={item}/>
   }
 
-  _renderBooks() {
-    if (this.props.loading) {
-        return <Spinner size="large"/>
-    } 
-
-    obj = this.props.dataSource.books;
-
-    const result = [];
-    try { 
-      Object.keys(obj).forEach(function(key) {
-        myBook = obj[key];
-        result.push(myBook);
-      });
-    } catch {
-
-    }
-
-    if (this.props.booksAvailable)
-        return (
-          <View>
-            <SafeAreaView style={styles.content}>
-              <FlatList 
-                data={result}
-                renderItem={this._renderItem}
-                numColumns={3}
-                showsVerticalScrollIndicator={false}
-              />
-            </SafeAreaView>
-          </View>
-        )
-        return (
-            <Text>Start by adding notes!</Text>
-        )
-  };
-
-
   render() {
-    const { currentUser } = this.state
-
-    // Welcome, {currentUser && currentUser.email}
+    const { currentUser } = this.state // Welcome, {currentUser && currentUser.email}
 
     return (
       <View style={styles.container}>
@@ -72,7 +94,18 @@ class Books extends Component {
           My Collection
         </Text>
         <View>
-          {this._renderBooks()}
+        <View>
+        <SafeAreaView style={styles.content}>
+          <FlatList 
+            data={this.state.result}
+            extraData={this.state.refresh}
+            renderItem={this._renderItem}
+            numColumns={3}
+            showsVerticalScrollIndicator={false}
+            ListHeaderComponent={this.renderHeader}
+          />
+        </SafeAreaView>
+      </View>
         </View>
         <AddButton onPress={() => Actions.AddBook()}/>
       </View>
@@ -96,7 +129,7 @@ export default connect(mapStateToProps, { fetchBooks })(Books);
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'white'
+    backgroundColor: '#f0f0f0'
   },
   text: {
     marginTop: 20,

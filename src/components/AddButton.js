@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
         position: 'absolute',
         alignSelf: 'flex-end',
         right: 20,
-        bottom: 20
+        bottom: 20,
     },
     buttonContainer: {
         width: 75,

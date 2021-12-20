@@ -56,7 +56,7 @@ const windowHeight = Dimensions.get('window').height;
 
 const styles = StyleSheet.create({
     formContainer: {
-        backgroundColor: '#c9c9c9',
+        backgroundColor: '#f0f0f0',
         flex: 1
     },
     header: {

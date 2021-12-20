@@ -15,7 +15,7 @@ export default class Discover extends Component {
     const { currentUser } = this.state
     return (
       <View style={styles.container}>
-        <Text style={styles.text} onPress={() => this.props.navigation.navigate('Books')}>Books</Text>
+        <Text style={styles.text} onPress={() => this.props.navigation.navigate('Books')}>{'< '} Books</Text>
         <Text style={styles.text} onPress={() => this.props.navigation.navigate('Settings')}>Settings</Text>
       </View>
     )
@@ -25,7 +25,6 @@ export default class Discover extends Component {
 const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
-    backgroundColor: 'white',
     justifyContent: 'space-between',
     marginHorizontal: 20,
     marginTop: 50
