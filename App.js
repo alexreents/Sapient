@@ -19,6 +19,7 @@ import EditBook from './src/screens/EditBook';
 import Discover from './src/screens/Discover';
 import Settings from './src/screens/Settings';
 import BookItem from './src/screens/BookItem';
+import Landing from './src/screens/Landing';
 
 class App extends Component{
   render(){
@@ -33,7 +34,7 @@ class App extends Component{
 const Routes = () => (
   <Router>
      <Scene key = "root" headerShown={false}>
-        <Scene key = "Loading" component = {Loading} title = "Loading" initial = {true} />
+        <Scene key = "Loading" component = {Loading} title = "Loading" />
         <Scene key = "Books" component = {Books} title = "Books" />
         <Scene key = "AddBook" component = {AddBook} title = "AddBook" gesturesEnabled={false}/>
         <Scene key = "BookItem" component = {BookItem} title = "BookItem" />
@@ -41,7 +42,8 @@ const Routes = () => (
         <Scene key = "Discover" component = {Discover} title = "Discover" />
         <Scene key = "Settings" component = {Settings} title = "Settings" />
         <Scene key = "Login" component = {Login} title = "Login" />
-        <Scene key = "Signup" component = {Signup} title = "Signup" />
+        <Scene key = "Signup" component = {Signup} title = "Signup"/>
+        <Scene key = "Landing" component = {Landing} title = "Landing" gesturesEnabled={false} initial = {true}/>
      </Scene>
   </Router>
 )

@@ -16,30 +16,22 @@ export default class ExploreItem extends Component {
 
         index = body.toLowerCase().search(query.toLowerCase());
 
-        startIndex = (index - 50 > 0) ? (index - 50) : (0);
-        preText = body.substring(startIndex, index);
+        startIndex = (index - 75 > 0) ? (index - 75) : (0);
+        preText = startIndex ? ("..." + body.substring(startIndex, index)) : (body.substring(startIndex, index));
         matchText = body.substring(index, index + query.length);
-        postText =  body.substring(index + query.length, index + 50);
+        postText =  body.substring(index + query.length, index + 75) + "...";
         
         return (
             <TouchableOpacity onPress={this.onBookPress.bind(this)} > 
-            <View>
-            <View>
-            <Text>{title}</Text>
-
-            </View>
-                <View
-                    style={{
-                    flexDirection: 'row',
-                    padding: 16,
-                    alignItems: 'center'
-                    }}>
+                <View style={styles.container}>
+                    <Text style={styles.title}>{title}</Text>
+                    <View style={styles.fullText}>
                         <Text>
                             <Text style={{color: 'darkgray'}}>{preText}</Text>
                             <Text style={{color: 'black'}}>{matchText}</Text>
                             <Text style={{color: 'darkgray'}}>{postText}</Text>
                         </Text>
-                </View>
+                    </View>
                 </View>
             </TouchableOpacity>
         )
@@ -51,13 +43,24 @@ const windowHeight = Dimensions.get('window').height;
 
 const styles = StyleSheet.create({
     container: {
-      alignSelf: 'center',
-      alignItems: 'center',
+      backgroundColor: 'white',
       shadowColor: '#000',
-      shadowOffset: { width: 1, height: 4 },
-      shadowOpacity:  0.4,
+      shadowOffset: { width: 0, height: 3 },
+      shadowOpacity:  0.2,
       shadowRadius: 3,
+      margin: 10,
+      borderRadius: 10
     }, 
+    title: {
+        fontWeight: '600',
+        paddingLeft: 10,
+        paddingTop: 10
+    },
+    fullText: {
+        flexDirection: 'row',
+        padding: 10,
+        alignItems: 'center'
+    },
     text: {
         justifyContent: 'space-around',
         alignContent: 'center',
