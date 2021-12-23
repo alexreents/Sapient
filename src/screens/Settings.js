@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { StyleSheet, Platform, Image, Text, View, Button } from 'react-native'
 import AddButton from '../components/AddButton';
 import auth from '@react-native-firebase/auth'
+import { Actions } from 'react-native-router-flux';
 
 export default class Settings extends Component {
   state = { currentUser: null }
@@ -18,18 +19,25 @@ export default class Settings extends Component {
     this.setState({ currentUser })
   }
 
+  /*
+  <Text style={styles.profile}>
+    {currentUser && currentUser.email}
+  </Text>
+  */
+
   render() {
-    const { currentUser } = this.state
     return (
-      <View style={styles.container}>
-        <Text style={styles.explore} onPress={() => this.props.navigation.navigate('Login')}>Logout</Text>
-        <Text style={styles.profile}>
-          Settings for {currentUser && currentUser.email}
-        </Text>
-        <View style={styles.body}>
+      <View>
+        <View style={styles.container}>
           <Text style={styles.text} onPress={() => this.props.navigation.navigate('Books')}>Books</Text>
-          <Text style={styles.text} onPress={() => this.props.navigation.navigate('Discover')}>Discover</Text>
+          <Text style={styles.text} onPress={() => Actions.Login({})}>Logout</Text>
         </View>
+       
+        <Text style={styles.info}>
+          Welcome to Sapient!
+        </Text>
+
+        
       </View>
     )
   }
@@ -37,28 +45,22 @@ export default class Settings extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: 'white'
+    flexDirection: "row",
+    justifyContent: 'space-between',
+    marginHorizontal: 20,
+    marginTop: 30
   },
   profile: {
+    marginTop: 20,
     alignSelf: 'center',
-    marginTop: 20
   },
   text: {
     marginTop: 20,
     fontWeight: '700',
     alignSelf: 'center'
   },
-  explore: {
-    alignSelf: 'flex-end',
-    marginTop: 50,
-    marginRight: 20,
-    fontWeight: '700'
-  },
-  body: {
-    flexDirection: "row",
-    backgroundColor: 'white',
-    justifyContent: 'space-evenly',
-    marginHorizontal: 20,
-  },
+  info: {
+    marginTop: 30,
+    alignSelf: 'center'
+  }
 })

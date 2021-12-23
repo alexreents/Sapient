@@ -1,5 +1,5 @@
 import React, { Component, useState } from 'react'
-import { StyleSheet, Platform, Image, Text, TextInput, View, Button, FlatList, ScrollView, List, SafeAreaView } from 'react-native'
+import { Dimensions, StyleSheet, Platform, Image, Text, TextInput, View, Button, FlatList, ScrollView, List, SafeAreaView } from 'react-native'
 import filter from 'lodash.filter'
 import AddButton from '../components/AddButton';
 import auth from '@react-native-firebase/auth'
@@ -17,6 +17,7 @@ class Books extends Component {
     const { currentUser } = auth();
     this.setState({ currentUser });
     this.props.fetchBooks();
+    this.props.fetchBooks();
   }
 
   componentDidUpdate() {
@@ -27,37 +28,32 @@ class Books extends Component {
         myBook = obj[key];
         res.push(myBook);
       });
-    } catch {
-
-    }
+    } catch {}
 
     this.state.result = res;
     this.state.fullData = res;
   }
 
+
+
   renderHeader = () => (
+    this.props.loading ? (
+      <View>
+        <Spinner />
+      </View>
+    ) : (
     <View
-      style={{
-        backgroundColor: '#fff',
-        padding: 10,
-        alignItems: 'center',
-        justifyContent: 'center'
-      }}>
+      style={styles.searchBarContainer}>
       <TextInput
         autoCapitalize='none'
         autoCorrect={false}
         onChangeText={this.handleSearch}
         status='info'
         placeholder='Search'
-        style={{
-          borderRadius: 25,
-          borderColor: '#333',
-          backgroundColor: '#fff'
-        }}
-        textStyle={{ color: '#000' }}
+        style={styles.searchBar}
       />
     </View>
-  )
+  ))
 
   handleSearch = text => {
     this.setState({ 
@@ -85,27 +81,33 @@ class Books extends Component {
   }
 
   render() {
-    const { currentUser } = this.state // Welcome, {currentUser && currentUser.email}
+    const { currentUser } = this.state; 
+
+    if (this.props.loading) {
+      return <Spinner />
+    }
 
     return (
+      
       <View style={styles.container}>
-        <Text style={styles.explore} onPress={() => this.props.navigation.navigate('Discover')}>Discover</Text>
+        <Text style={styles.explore} onPress={() => this.props.navigation.navigate('Discover')}>Explore</Text>
         <Text style={styles.text}>
           My Collection
         </Text>
         <View>
-        <View>
-        <SafeAreaView style={styles.content}>
-          <FlatList 
-            data={this.state.result}
-            extraData={this.state.refresh}
-            renderItem={this._renderItem}
-            numColumns={3}
-            showsVerticalScrollIndicator={false}
-            ListHeaderComponent={this.renderHeader}
-          />
-        </SafeAreaView>
-      </View>
+        
+        <View style={styles.fullContent}>
+          <SafeAreaView style={styles.content}>
+            <FlatList 
+              data={this.state.result}
+              extraData={this.state.refresh}
+              renderItem={this._renderItem}
+              numColumns={3}
+              showsVerticalScrollIndicator={false}
+              ListHeaderComponent={this.renderHeader}
+            />
+          </SafeAreaView>
+        </View>
         </View>
         <AddButton onPress={() => Actions.AddBook()}/>
       </View>
@@ -126,6 +128,9 @@ const mapStateToProps = (state) => {
 
 export default connect(mapStateToProps, { fetchBooks })(Books);
 
+const windowWidth = Dimensions.get('window').width;
+const windowHeight = Dimensions.get('window').height;
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -134,7 +139,7 @@ const styles = StyleSheet.create({
   text: {
     marginTop: 20,
     fontWeight: '500',
-    alignSelf: 'center'
+    alignSelf: 'center',
   },
   explore: {
     alignSelf: 'flex-end',
@@ -142,12 +147,30 @@ const styles = StyleSheet.create({
     marginRight: 20,
     fontWeight: '700'
   }, 
+  fullContent: {
+
+  },
   content: {
     marginTop: 10,
     alignItems: 'center',
     overflow: 'visible',
-    marginBottom: 100
-  }
+    marginBottom: 100,
+  },
+  searchBarContainer: {
+    alignSelf: 'center',
+    width: 0.75*windowWidth + 40,
+    backgroundColor: 'white',
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: 'lightgray',
+  },
+  searchBar: {
+    flexDirection:'row',
+    paddingVertical: 10,
+    backgroundColor: 'white',
+    paddingHorizontal: 20,
+    borderRadius: 10,
+  },
 })
 
 

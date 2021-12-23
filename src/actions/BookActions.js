@@ -1,6 +1,7 @@
 import { Actions } from 'react-native-router-flux';
 import database from '@react-native-firebase/database';
 import auth from '@react-native-firebase/auth';
+import { result } from 'lodash';
 
 export const fetchBooks = () => {
     const { currentUser } = auth();
@@ -9,6 +10,7 @@ export const fetchBooks = () => {
         dispatch({type: 'fetch_books' });
         database().ref(`/users/${currentUser.uid}/book`)
         .on('value', snapshot => {
+            //console.log(snapshot.val());
             dispatch({type: 'book_fetch_success', payload: snapshot.val() });
         });
     };

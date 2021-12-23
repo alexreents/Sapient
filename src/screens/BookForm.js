@@ -143,13 +143,13 @@ const styles = StyleSheet.create({
     width: '90%',
     bottom: 30,
     backgroundColor: 'white',
-    borderRadius: 15,
+    borderRadius: 10,
     borderWidth: 1,
-    borderColor: 'gray'
+    borderColor: 'lightgray'
   },
   searchBar: {
     flexDirection:'row',
-    paddingVertical: 15,
+    paddingVertical: 10,
     backgroundColor: 'white',
     paddingHorizontal: 20,
   },
@@ -157,19 +157,19 @@ const styles = StyleSheet.create({
     flex: 1
   },
   searchResultContainer: {
-    borderRadius: 15,
+    borderRadius: 10,
   },
   searchResultItems: {
-    paddingVertical: 15,
+    paddingVertical: 10,
     backgroundColor: '#d9dcff',
     paddingHorizontal: 20,
     flexDirection:'row',
-    borderColor: 'gray',
+    borderColor: 'lightgray',
     borderBottomWidth: 1
   },
   searchResultText: {
     flex: 1,
-    paddingBottom: 15
+    paddingBottom: 10
   },
   suggestedText: {
     flex: 1,

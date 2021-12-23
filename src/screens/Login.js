@@ -9,7 +9,7 @@ export default class Login extends Component {
     const { email, password, errorMessage } = this.state
     auth()
         .signInWithEmailAndPassword(email, password)
-        .then(() => Actions.Books())
+        .then(() => Actions.Books({}))
         .catch(error => this.setState({ errorMessage: error.message }))
   }
   render() {

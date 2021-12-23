@@ -3,7 +3,7 @@ import { Provider } from 'react-redux'
 import { Scene, Router, Actions } from 'react-native-router-flux';
 import { createStore, applyMiddleware } from 'redux';
 import { StyleSheet, Platform, Image, Text, View } from 'react-native'
-import { createSwitchNavigator, createAppContainer } from 'react-navigation' 
+//import { createSwitchNavigator, createAppContainer } from 'react-navigation' 
 import ReduxThunk from 'redux-thunk';
 import BookReducer from './src/reducers/BookReducer';
 
@@ -37,7 +37,7 @@ const Routes = () => (
         <Scene key = "Books" component = {Books} title = "Books" />
         <Scene key = "AddBook" component = {AddBook} title = "AddBook" gesturesEnabled={false}/>
         <Scene key = "BookItem" component = {BookItem} title = "BookItem" />
-        <Scene key = "EditBook" component = {EditBook} title = "EditBook" gesturesEnabled={false} />
+        <Scene key = "EditBook" component = {EditBook} title = "EditBook" />
         <Scene key = "Discover" component = {Discover} title = "Discover" />
         <Scene key = "Settings" component = {Settings} title = "Settings" />
         <Scene key = "Login" component = {Login} title = "Login" />

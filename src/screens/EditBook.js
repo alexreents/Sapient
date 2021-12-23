@@ -26,6 +26,7 @@ class EditBook extends Component {
     onSavePress() {
         this.props.editBook({title: this.props.title, author: this.props.author, body: this.props.body, image: this.props.image, id: this.props.id});
         this.props.navigation.navigate('Books');
+        //Actions.Books();
     };
 
     onDeletePress() {
@@ -53,7 +54,7 @@ class EditBook extends Component {
         return (
             <View style={styles.header}>
                 <Text style={styles.backButton} onPress={this.onSavePress.bind(this)}>
-                    Save
+                    Close
                 </Text>
                 <Text style={styles.deleteButton} onPress={this.onDeletePress.bind(this)}>Delete</Text>
             </View>
@@ -94,7 +95,7 @@ export default connect(mapStateToProps, { updateBook, editBook, deleteBook, load
 
 const styles = StyleSheet.create({
     formContainer: {
-        backgroundColor: '#c9c9c9',
+        backgroundColor: '#f0f0f0',
         flex: 1
     },
     header: {
