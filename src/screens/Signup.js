@@ -1,13 +1,14 @@
 import React, { Component } from 'react'
-import { StyleSheet, Text, TextInput, View, Button, Dimensions, Image } from 'react-native'
+import { StyleSheet, Text, TextInput, View, Button, Dimensions, Image, TouchableOpacity } from 'react-native'
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import auth from '@react-native-firebase/auth'
-//import Icon from 'react-native-vector-icons/Ionicons';
+import Icon from 'react-native-vector-icons/FontAwesome';
+import { Actions } from 'react-native-router-flux';
 
 
 export default class Signup extends Component {
-    state = { email: '', password: '', errorMessage: null }
+    state = { email: '', password: '', errorMessage: null, placeholderEmail: "Email", placeholderPassword: "Password" }
 
     handleSignUp = () => {
         auth()
@@ -18,45 +19,50 @@ export default class Signup extends Component {
 render() {
   return (
     <View style={styles.container}>
-        <Image source={require('../assets/splashscreen.png')} style={styles.backgroundImage}/>
+        <Image source={require('../assets/paintsplash3.png')} style={styles.backgroundImage}/>
         <View style={styles.textContainer}>
-            <Text style={styles.title}>
-              Sign up
+            <Text style={styles.title} onPress={() => this.props.navigation.navigate('Landing')}>
+              <Icon name="chevron-left" size={20} style={{paddingRight: 5}} />
+              {"  "}Sign up
             </Text>
             {this.state.errorMessage && 
             <Text style={styles.description}>
               {this.state.errorMessage}
             </Text>}
             <TextInput
+              selectionColor={'white'}
               style={styles.emailTextInput}
               autoCapitalize="none"
-              placeholder="Email"
-              placeholderTextColor={'gray'}
+              placeholder={this.state.placeholderEmail}
+              onFocus={() => this.setState({ placeholderEmail: '' })}
+              placeholderTextColor={'white'}
               onChangeText={email => this.setState({ email })}
               value={this.state.email}
             />
             <TextInput
+              selectionColor={'white'}
               secureTextEntry
               style={styles.passwordTextInput}
               autoCapitalize="none"
-              placeholder="Password"
-              placeholderTextColor={'gray'}
+              placeholder={this.state.placeholderPassword}
+              onFocus={() => this.setState({ placeholderPassword: '' })}
+              placeholderTextColor={'white'}
               onChangeText={password => this.setState({ password })}
               value={this.state.password}
             />
-            <View style={styles.loginBtnContainer}>
-                <Text style={styles.loginBtn} onPress={this.handleSignUp}>Sign up</Text>
-            </View>
+            <TouchableOpacity style={styles.loginBtnContainer} onPress={this.handleSignUp}>
+                <Text style={styles.loginBtn}>Sign up</Text>
+            </TouchableOpacity>
             <View style={{flexDirection: 'row', alignItems: 'center', marginVertical: 5}}>
-              <View style={{flex: 1, height: 1, backgroundColor: 'gray'}} />
+              <View style={{flex: 1, height: 1, backgroundColor: 'white'}} />
               <View>
-                <Text style={{width: 50, textAlign: 'center', color: 'gray', fontSize: 12}}>or</Text>
+                <Text style={{width: 50, textAlign: 'center', color: 'white', fontSize: 12}}>or</Text>
               </View>
-              <View style={{flex: 1, height: 1, backgroundColor: 'gray'}} />
+              <View style={{flex: 1, height: 1, backgroundColor: 'white'}} />
             </View>
-            <View style={styles.signupBtnContainer}>
-                <Text style={styles.signupBtn} onPress={() => this.props.navigation.navigate('Login')}>Log in</Text>
-            </View>
+            <TouchableOpacity style={styles.signupBtnContainer} onPress={() => Actions.Login({})}>
+                <Text style={styles.signupBtn}>Log in</Text>
+            </TouchableOpacity>
         </View>
     </View>
   )
@@ -76,7 +82,7 @@ const styles = StyleSheet.create({
       flexDirection: 'column',
       justifyContent: 'space-between',
       padding: 20,
-      backgroundColor: 'black',
+      backgroundColor: '#63707d',
   },
   textContainer: {
       marginBottom: 50,
@@ -114,7 +120,7 @@ const styles = StyleSheet.create({
       marginBottom: 10,
       marginTop: 5,
       paddingVertical: 10,
-      backgroundColor: 'black',
+      backgroundColor: '#63707d',
       borderRadius: 5,
       borderWidth: 1,
       borderColor: 'white'
@@ -132,7 +138,7 @@ const styles = StyleSheet.create({
       borderRadius: 5
   },
   loginBtn: {
-      color: 'black',
+      color: '#63707d',
       textAlign: 'center',
       fontWeight: '500'
   }

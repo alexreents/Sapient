@@ -14,6 +14,7 @@
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		C3E2C20E5E1F0E859A3948F6 /* libPods-Sapient.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1444DC53297644BF320746B5 /* libPods-Sapient.a */; };
 		DB4AE69A2769225D0094598A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = DB4AE6992769225D0094598A /* GoogleService-Info.plist */; };
+		DBEEFEB62775400E001F04C1 /* fonts in Resources */ = {isa = PBXBuildFile; fileRef = DBEEFEB52775400E001F04C1 /* fonts */; };
 		E64115C22B0AC7E05BFD2137 /* libPods-Sapient-SapientTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B81BCF4A090B3666332E994A /* libPods-Sapient-SapientTests.a */; };
 /* End PBXBuildFile section */
 
@@ -44,6 +45,7 @@
 		8C58FB93B1C077BD8741A601 /* Pods-Sapient-SapientTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Sapient-SapientTests.release.xcconfig"; path = "Target Support Files/Pods-Sapient-SapientTests/Pods-Sapient-SapientTests.release.xcconfig"; sourceTree = "<group>"; };
 		B81BCF4A090B3666332E994A /* libPods-Sapient-SapientTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Sapient-SapientTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DB4AE6992769225D0094598A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		DBEEFEB52775400E001F04C1 /* fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; path = fonts; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		FAF0F486247FF74E0F5233CD /* Pods-Sapient.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Sapient.debug.xcconfig"; path = "Target Support Files/Pods-Sapient/Pods-Sapient.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -118,6 +120,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				DBEEFEB52775400E001F04C1 /* fonts */,
 				DB4AE6992769225D0094598A /* GoogleService-Info.plist */,
 				13B07FAE1A68108700A75B9A /* Sapient */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
@@ -125,6 +128,7 @@
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				E47145BAD1F9177A673ADCD0 /* Pods */,
+				8FECF1C286CF492B98986E0E /* Resources */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -140,6 +144,13 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		8FECF1C286CF492B98986E0E /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
 		E47145BAD1F9177A673ADCD0 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -148,7 +159,6 @@
 				22578700F3077D6E1A970418 /* Pods-Sapient-SapientTests.debug.xcconfig */,
 				8C58FB93B1C077BD8741A601 /* Pods-Sapient-SapientTests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -250,6 +260,7 @@
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				DB4AE69A2769225D0094598A /* GoogleService-Info.plist in Resources */,
+				DBEEFEB62775400E001F04C1 /* fonts in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

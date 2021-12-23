@@ -1,24 +1,25 @@
 import React, { Component } from 'react'
-import { StyleSheet, Text, TextInput, View, Button, Image, Dimensions } from 'react-native'
+import { StyleSheet, Text, TextInput, View, Button, Image, Dimensions, TouchableOpacity } from 'react-native'
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import auth from '@react-native-firebase/auth'
+import { Actions } from 'react-native-router-flux';
 
 
 export default class Landing extends Component {
     render() {
         return (
             <View style={styles.container}>
-                <Image source={require('../assets/splashscreen.png')} style={styles.backgroundImage}/>
+                <Image source={require('../assets/paintsplash.png')} style={styles.backgroundImage}/>
                 <View style={styles.textContainer}>
                     <Text style={styles.title}>Sapient</Text>
-                    <Text style={styles.description}>Knowledge management system - save, search, and share information with Sapient!</Text>
-                    <View style={styles.loginBtnContainer}>
-                        <Text style={styles.loginBtn} onPress={() => this.props.navigation.navigate('Login')}>Log in</Text>
-                    </View>
-                    <View style={styles.signupBtnContainer}>
-                        <Text style={styles.signupBtn} onPress={() => this.props.navigation.navigate('Signup')}>Sign up</Text>
-                    </View>
+                    <Text style={styles.description}>Knowledge management system - save, search, and share information with Sapient</Text>
+                    <TouchableOpacity style={styles.loginBtnContainer} onPress={() => Actions.Login({})}>
+                        <Text style={styles.loginBtn}>Log in</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.signupBtnContainer} onPress={() => Actions.Signup({})}>
+                        <Text style={styles.signupBtn}>Sign up</Text>
+                    </TouchableOpacity>
                 </View>
             </View>
         )
@@ -37,11 +38,11 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: 'column',
         justifyContent: 'space-between',
-        padding: 20,
-        backgroundColor: 'black',
+        backgroundColor: '#63707d',
     },
     textContainer: {
         marginBottom: 50,
+        padding: 20
     },
     title: {
         fontSize: 24,
@@ -58,7 +59,7 @@ const styles = StyleSheet.create({
         marginBottom: 10,
         marginTop: 5,
         paddingVertical: 10,
-        backgroundColor: 'black',
+        backgroundColor: '#63707d',
         borderRadius: 5,
         borderWidth: 1,
         borderColor: 'white'
@@ -76,7 +77,7 @@ const styles = StyleSheet.create({
         borderRadius: 5
     },
     loginBtn: {
-        color: 'black',
+        color: '#63707d',
         textAlign: 'center',
         fontWeight: '500'
     }
