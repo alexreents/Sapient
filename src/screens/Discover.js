@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Dimensions, StyleSheet, Platform, Image, Text, View, Button, FlatList, TextInput, TouchableOpacity } from 'react-native'
 import filter from 'lodash.filter'
 import AddButton from '../components/AddButton';
+import ExploreItem from './ExploreItem';
 import { Actions } from 'react-native-router-flux';
 import database from '@react-native-firebase/database';
 import auth from '@react-native-firebase/auth';
@@ -10,8 +11,6 @@ export default class Discover extends Component {
   state = {
     loading: false,
     data: [],
-    page: 1,
-    seed: 1,
     error: null,
     query: '',
     fullData: [],
@@ -26,10 +25,7 @@ export default class Discover extends Component {
   }
 
   makeRemoteRequest = () => {
-    const { page, seed } = this.state
-    const url = `https://randomuser.me/api/?seed=${seed}&page=${page}&results=20`
     this.setState({ loading: true })
-    
     const { currentUser } = auth();
 
     database().ref(`/users/${currentUser.uid}/book`)
@@ -78,7 +74,9 @@ export default class Discover extends Component {
     </View>
   )
   
-
+  _renderItem = ({item}) => {
+    return <ExploreItem book={item} query ={this.state.query}/>
+  }
 
 
   render() {
@@ -100,22 +98,7 @@ export default class Discover extends Component {
         }}>
         <FlatList
           data={this.state.data}
-          renderItem={({ item }) => (
-            <TouchableOpacity onPress={() => Actions.EditBook({ book: item })}>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  padding: 16,
-                  alignItems: 'center'
-                }}>
-                <Text
-                  category='s1'
-                  style={{
-                    color: '#000'
-                  }}>{item.body}</Text>
-              </View>
-            </TouchableOpacity>
-          )}
+          renderItem={this._renderItem}
           ListHeaderComponent={this.renderHeader}
         />
       </View>
