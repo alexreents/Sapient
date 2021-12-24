@@ -30,7 +30,7 @@ export default class Settings extends Component {
       <View>
         <View style={styles.container}>
           <Text style={styles.text} onPress={() => this.props.navigation.navigate('Books')}>Books</Text>
-          <Text style={styles.text} onPress={() => Actions.Landing({})}>Logout</Text>
+          <Text style={styles.text} onPress={this.handleLogout}>Logout</Text>
         </View>
        
         <Text style={styles.info}>
