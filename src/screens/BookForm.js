@@ -71,8 +71,9 @@ class BookForm extends Component {
     
     render() {
         return (
+          //keyboard view
             <KeyboardAvoidingView behavior={Platform.select({android: 'padding', ios: 'padding'})} style={styles.container}>
-              <KeyboardAvoidingView behavior={Platform.select({android: 'padding', ios: 'padding'})} style={styles.bookDescription}>
+              <View style={styles.bookDescription}>
                 <Text style={styles.titleText}>{this.props.title===undefined ? ('Add new book') : (this.props.title)}</Text>
                 <Text style={styles.authorText}>{this.props.author===undefined ? ('') : (this.props.author)}</Text>
                 <TextInput 
@@ -83,8 +84,7 @@ class BookForm extends Component {
                   onChangeText={value => this.props.updateBook({prop: 'body', value})}
                   multiline={true}
                 />
-              </KeyboardAvoidingView>
-              
+              </View>
               <View behavior={Platform.select({android: 'padding', ios: 'padding'})} style={styles.searchBarContainer}>
                 <FlatList 
                     style={styles.searchResultContainer}
@@ -115,7 +115,6 @@ class BookForm extends Component {
                     )}
                 />
               </View>  
-              
             </KeyboardAvoidingView>
         )
     }
@@ -136,7 +135,8 @@ const styles = StyleSheet.create({
   },
   bookDescription: {
     flex: 1,
-    margin: 15
+    margin: 15,
+    paddingBottom: 10
   },
   searchBarContainer: {
     alignSelf: 'center',
@@ -145,7 +145,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     borderRadius: 10,
     borderWidth: 1,
-    borderColor: 'lightgray'
+    borderColor: 'lightgray',
   },
   searchBar: {
     flexDirection:'row',
@@ -190,6 +190,9 @@ const styles = StyleSheet.create({
   },
   bodyText: {
     padding: 10,
-    marginTop: 15
+    marginTop: 15,
+    paddingBottom: 40,
+    marginBottom: 40
+
   }
 })

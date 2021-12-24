@@ -138,8 +138,9 @@ const styles = StyleSheet.create({
   },
   text: {
     marginTop: 20,
-    fontWeight: '500',
+    fontWeight: '600',
     alignSelf: 'center',
+    fontSize: 16
   },
   explore: {
     alignSelf: 'flex-end',

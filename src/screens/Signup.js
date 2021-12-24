@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { StyleSheet, Text, TextInput, View, Button, Dimensions, Image, TouchableOpacity } from 'react-native'
+import { StyleSheet, Text, TextInput, View, Button, Dimensions, Image, TouchableOpacity, KeyboardAvoidingView, ScrollView } from 'react-native'
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import auth from '@react-native-firebase/auth'
@@ -20,7 +20,7 @@ render() {
   return (
     <View style={styles.container}>
         <Image source={require('../assets/paintsplash3.png')} style={styles.backgroundImage}/>
-        <View style={styles.textContainer}>
+        <KeyboardAvoidingView behavior={Platform.select({android: 'padding', ios: 'padding'})} style={styles.textContainer}>
             <Text style={styles.title} onPress={() => this.props.navigation.navigate('Landing')}>
               <Icon name="chevron-left" size={20} style={{paddingRight: 5}} />
               {"  "}Sign up
@@ -29,41 +29,44 @@ render() {
             <Text style={styles.description}>
               {this.state.errorMessage}
             </Text>}
-            <TextInput
-              selectionColor={'white'}
-              style={styles.emailTextInput}
-              autoCapitalize="none"
-              placeholder={this.state.placeholderEmail}
-              onFocus={() => this.setState({ placeholderEmail: '' })}
-              placeholderTextColor={'white'}
-              onChangeText={email => this.setState({ email })}
-              value={this.state.email}
-            />
-            <TextInput
-              selectionColor={'white'}
-              secureTextEntry
-              style={styles.passwordTextInput}
-              autoCapitalize="none"
-              placeholder={this.state.placeholderPassword}
-              onFocus={() => this.setState({ placeholderPassword: '' })}
-              placeholderTextColor={'white'}
-              onChangeText={password => this.setState({ password })}
-              value={this.state.password}
-            />
-            <TouchableOpacity style={styles.loginBtnContainer} onPress={this.handleSignUp}>
-                <Text style={styles.loginBtn}>Sign up</Text>
-            </TouchableOpacity>
-            <View style={{flexDirection: 'row', alignItems: 'center', marginVertical: 5}}>
-              <View style={{flex: 1, height: 1, backgroundColor: 'white'}} />
-              <View>
-                <Text style={{width: 50, textAlign: 'center', color: 'white', fontSize: 12}}>or</Text>
+            <ScrollView>
+              <TextInput
+                selectionColor={'white'}
+                style={styles.emailTextInput}
+                autoCapitalize="none"
+                placeholder={this.state.placeholderEmail}
+                onFocus={() => this.setState({ placeholderEmail: '' })}
+                placeholderTextColor={'white'}
+                onChangeText={email => this.setState({ email })}
+                value={this.state.email}
+              />
+              <TextInput
+                selectionColor={'white'}
+                secureTextEntry
+                style={styles.passwordTextInput}
+                autoCapitalize="none"
+                placeholder={this.state.placeholderPassword}
+                onFocus={() => this.setState({ placeholderPassword: '' })}
+                placeholderTextColor={'white'}
+                onChangeText={password => this.setState({ password })}
+                value={this.state.password}
+              />
+              <TouchableOpacity style={styles.loginBtnContainer} onPress={this.handleSignUp}>
+                  <Text style={styles.loginBtn}>Sign up</Text>
+              </TouchableOpacity>
+              <View style={{flexDirection: 'row', alignItems: 'center', marginVertical: 5}}>
+                <View style={{flex: 1, height: 1, backgroundColor: 'white'}} />
+                <View>
+                  <Text style={{width: 50, textAlign: 'center', color: 'white', fontSize: 12}}>or</Text>
+                </View>
+                <View style={{flex: 1, height: 1, backgroundColor: 'white'}} />
               </View>
-              <View style={{flex: 1, height: 1, backgroundColor: 'white'}} />
-            </View>
-            <TouchableOpacity style={styles.signupBtnContainer} onPress={() => Actions.Login({})}>
-                <Text style={styles.signupBtn}>Log in</Text>
-            </TouchableOpacity>
-        </View>
+              <TouchableOpacity style={styles.signupBtnContainer} onPress={() => Actions.Login({})}>
+                  <Text style={styles.signupBtn}>Log in</Text>
+              </TouchableOpacity>
+            </ScrollView>
+
+        </KeyboardAvoidingView>
     </View>
   )
 }
@@ -75,7 +78,7 @@ const windowHeight = Dimensions.get('window').height;
 const styles = StyleSheet.create({
   backgroundImage: {
       width: windowWidth,
-      height: windowHeight/2
+      height: windowHeight/3
   },
   container: {
       flex: 1,

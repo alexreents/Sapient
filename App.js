@@ -34,16 +34,16 @@ class App extends Component{
 const Routes = () => (
   <Router>
      <Scene key = "root" headerShown={false}>
-        <Scene key = "Loading" component = {Loading} title = "Loading" />
-        <Scene key = "Books" component = {Books} title = "Books" />
+        <Scene key = "Loading" component = {Loading} title = "Loading" initial = {true}/>
+        <Scene key = "Books" component = {Books} title = "Books"  gesturesEnabled={false}/>
         <Scene key = "AddBook" component = {AddBook} title = "AddBook" gesturesEnabled={false}/>
         <Scene key = "BookItem" component = {BookItem} title = "BookItem" />
-        <Scene key = "EditBook" component = {EditBook} title = "EditBook" />
+        <Scene key = "EditBook" component = {EditBook} title = "EditBook"  gesturesEnabled={false}/>
         <Scene key = "Discover" component = {Discover} title = "Discover" />
         <Scene key = "Settings" component = {Settings} title = "Settings" />
         <Scene key = "Login" component = {Login} title = "Login" />
         <Scene key = "Signup" component = {Signup} title = "Signup"/>
-        <Scene key = "Landing" component = {Landing} title = "Landing" gesturesEnabled={false} initial = {true}/>
+        <Scene key = "Landing" component = {Landing} title = "Landing" gesturesEnabled={false}/>
      </Scene>
   </Router>
 )

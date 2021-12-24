@@ -6,7 +6,7 @@ export default class Loading extends Component {
     componentDidMount() {
         auth()
             .onAuthStateChanged(user => {
-            this.props.navigation.navigate(user ? 'Books' : 'Signup')
+            this.props.navigation.navigate(user ? 'Books' : 'Landing')
         })
     }
     render() {

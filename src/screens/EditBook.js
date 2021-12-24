@@ -8,7 +8,7 @@ import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
 import database from '@react-native-firebase/database';
 import auth from '@react-native-firebase/auth';
-
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 
 class EditBook extends Component {
@@ -54,7 +54,8 @@ class EditBook extends Component {
         return (
             <View style={styles.header}>
                 <Text style={styles.backButton} onPress={this.onSavePress.bind(this)}>
-                    Close
+                    <Icon name="chevron-left" size={12} style={{paddingRight: 5}} />
+                    {"  "}Save
                 </Text>
                 <Text style={styles.deleteButton} onPress={this.onDeletePress.bind(this)}>Delete</Text>
             </View>

@@ -5,6 +5,7 @@ import { createBook, updateBook } from '../actions/BookActions';
 import { Spinner } from '../common/Spinner';
 import BookForm from './BookForm';
 import { Actions } from 'react-native-router-flux'
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 class AddBook extends Component {
     renderHeader() {
@@ -15,7 +16,8 @@ class AddBook extends Component {
             <View style={styles.header}>
                 <Text style={styles.backButton} onPress={() => {
                     this.props.navigation.navigate('Books');
-                }}>Cancel
+                }}><Icon name="chevron-left" size={12} style={{paddingRight: 5}} />
+                {"  "}Cancel
                 </Text>
                 <Text style={styles.saveButton} onPress={this.onButtonPress.bind(this)}>Save</Text>
             </View>
